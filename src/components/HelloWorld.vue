@@ -2,6 +2,7 @@
   <div class="hello">
     <input v-model.number="operand1" />
     <input v-model.number="operand2" />
+    <input v-model.number="operand3" />
     = {{ result }}
     <div>
       <button @click="sum">+</button>
