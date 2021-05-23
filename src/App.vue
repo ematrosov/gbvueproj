@@ -1,28 +1,59 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" :myBool="false" />
+    <header :class="[$style.header]">My personal costs</header>
+    <main>
+      <PaymentForm @add="onDataAdded" />
+      <PaymentsList :items="paymentsList" />
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import PaymentsList from "./components/PaymentsList";
+import PaymentForm from "./components/PaymentForm";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    PaymentsList,
+  },
+
+  data() {
+    return {
+      paymentsList: [
+        {
+          data: "13.05.2021",
+          category: "Education",
+          price: 123,
+        },
+        {
+          data: "13.05.2021",
+          category: "Education",
+          price: 123,
+        },
+        {
+          data: "13.05.2021",
+          category: "Education",
+          price: 123,
+        },
+        {
+          data: "13.05.2021",
+          category: "Education",
+          price: 123,
+        },
+      ],
+    };
+  },
+  methods: {
+    onDataAdded(data) {
+      this.paymentsList.push(data);
+    },
   },
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" module>
+.header {
+  color: red;
 }
 </style>
