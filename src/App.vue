@@ -16,40 +16,24 @@ export default {
   name: "App",
   components: {
     PaymentsList,
+    PaymentForm
   },
 
   data() {
     return {
-      paymentsList: [
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-      ],
-    };
+     PaymentsList: []
   },
-  methods: {
-    onDataAdded(data) {
-      this.paymentsList.push(data);
-    },
-  },
-};
+},
+methods: {
+  onDataAdded (data) {
+    this.PaymentsList.push(data)
+  }
+}
+
+}
+
+
+
 </script>
 
 <style lang="scss" module>

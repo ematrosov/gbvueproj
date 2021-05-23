@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -21,10 +22,19 @@ export default {
     items: Array,
   },
   methods: {
+    ...mapMutations([
+      
+    ])
     save() {
       const { date, category, price } = this;
       this.$emit("add", { date, category, price });
     },
+    fetchData() {
+      return [];
+    },
+  },
+  mounted() {
+    this.$store.commit("setPaymentsListData", this.fetchData());
   },
 };
 </script>
