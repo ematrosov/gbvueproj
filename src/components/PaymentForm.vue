@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -21,10 +23,34 @@ export default {
     items: Array,
   },
   methods: {
+    ...mapMutations(["setPaymentsListData"]),
     save() {
       const { date, category, price } = this;
       this.$emit("add", { date, category, price });
     },
+    fetchData() {
+      return [
+        {
+          date: "13.05.2021",
+          category: "Education",
+          price: 123,
+        },
+        {
+          date: "13.05.2021",
+          category: "Education",
+          price: 123,
+        },
+        {
+          date: "13.05.2021",
+          category: "Education",
+          price: 123,
+        },
+      ];
+    },
+  },
+  mounted() {
+    this.$store.commit("setPaymentsListData", this.fetchData());
+    this.setPaymentsListData(this.fetchData());
   },
 };
 </script>

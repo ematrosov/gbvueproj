@@ -2,8 +2,8 @@
   <div id="app">
     <header :class="[$style.header]">My personal costs</header>
     <main>
-      <PaymentForm @add="onDataAdded" />
-      <PaymentsList :items="paymentsList" />
+      <PaymentForm />
+      <PaymentsList />
     </main>
   </div>
 </template>
@@ -12,42 +12,28 @@
 import PaymentsList from "./components/PaymentsList";
 import PaymentForm from "./components/PaymentForm";
 
+import { mapActions } from "vuex";
+
 export default {
   name: "App",
   components: {
     PaymentsList,
+    PaymentForm,
   },
 
   data() {
     return {
-      paymentsList: [
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-      ],
+      PaymentsList: [],
     };
   },
   methods: {
+    ...mapActions(["fetchData"]),
     onDataAdded(data) {
-      this.paymentsList.push(data);
+      this.PaymentsList.push(data);
     },
+  },
+  mounted() {
+    this.fetchData();
   },
 };
 </script>
