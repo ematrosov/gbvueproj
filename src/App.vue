@@ -1,7 +1,15 @@
 <template>
   <div id="app">
-    <header :class="[$style.header]">My personal costs</header>
+    <header :class="[$style.header]">
+      My personal costs
+      <a href="#dashboard">Dashboard</a>
+      <a href="#about">About</a>
+      <a href="#404">404</a>
+    </header>
     <main>
+      <PageDashboard v-if="page === 'dashboard'" />
+      <PageAbout v-if="page === 'about'" />
+      <Page404 v-if="page === '404'" />
       <PaymentForm @add="onDataAdded" />
       <PaymentsList :items="paymentsList" />
     </main>
@@ -9,45 +17,34 @@
 </template>
 
 <script>
-import PaymentsList from "./components/PaymentsList";
-import PaymentForm from "./components/PaymentForm";
+import PageDashboard from "./page/PageDashboard";
+import PageAbout from "./page/PageAbout";
+import Page404 from "./page/page404 ";
 
 export default {
   name: "App",
   components: {
-    PaymentsList,
+    PageDashboard,
+    PageAbout,
+    Page404,
   },
 
   data() {
     return {
-      paymentsList: [
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-        {
-          data: "13.05.2021",
-          category: "Education",
-          price: 123,
-        },
-      ],
+      page: "dashboard",
     };
   },
   methods: {
-    onDataAdded(data) {
-      this.paymentsList.push(data);
+    setPage() {
+      this.page = location.hash.slice(1);
     },
+  },
+
+  mounted() {
+    this.setPage();
+    window.addEventListener("hashchange", () => {
+      this.setPage();
+    });
   },
 };
 </script>
