@@ -1,48 +1,32 @@
 <template>
   <div id="app">
-    <header class="header">My personal costs</header>
-    <main>
-      <PaymentForm />
-      <PaymentsList />
-    </main>
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
 
-<script>
-import PaymentList from "./components/PaymentsList.vue";
-import PaymentForm from "./components/PaymentForm.vue";
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-import { mapActions } from "vuex";
+#nav {
+  padding: 30px;
 
-export default {
-  name: "App",
-  components: {
-    PaymentList,
-    PaymentForm,
-  },
+  a {
+    font-weight: bold;
+    color: #2c3e50;
 
-  data() {
-    return {
-      page: "dashboard",
-    };
-  },
-  methods: {
-    setPage() {
-      this.page = location.hash.slice(1);
-    },
-  },
-
-  mounted() {
-    this.setPage();
-    window.addEventListener("hashchange", () => {
-      this.setPage();
-    });
-  },
-};
-</script>
-
-<style lang="scss" module>
-.header {
-  color: red;
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>

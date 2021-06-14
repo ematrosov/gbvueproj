@@ -1,47 +1,83 @@
+
 import Vue from 'vue'
-import { set } from 'vue/types/umd'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-
     state: {
-        paymentsList: []
-
+        paymentsList: [],
+        paymentsOnPage: [],
+        paymentsPerPage: 5,
+        pagesCount: 0,
+        currentPageNumber: 1,
+        paymentTypes: [
+            { name: 'food' },
+            { name: 'housing' },
+            { name: 'transport' }
+        ]
     },
     mutations: {
-        setPaymentsListDta(state, payload) {
+        setPaymentsList(state, payload) {
             state.paymentsList = payload
+        },
+        setCurrentPageNumber(state, payload) {
+            state.currentPageNumber = payload
+        },
+        setNewPayment(state, payload) {
+            state.paymentsList.push(payload)
+        },
+        setNewPaymentTypes(state, payload) {
+            state.paymentTypes.push(payload)
         }
     },
     getters: {
-        getPaymentsList: state => state.paymentsList,
-        getPaymentsListFullPrice: state => {
-            return state.paymentsList
-                .reduce((res, cur) => res + cur.price, 0)
+        getAllPayments: state => state.paymentsList,
+        getPaymentsOnPage: state => {
+            return state.paymentsList.slice((state.currentPageNumber - 1) * state.paymentsPerPage, (state.currentPageNumber - 1) * state.paymentsPerPage + state.paymentsPerPage)
+        },
+        getPagesCount: state => {
+            return Math.ceil(state.paymentsList.length / state.paymentsPerPage)
+        },
+        getCurrentPageNumber: state => {
+            return state.currentPageNumber
+        },
+        getPaymentTypes: state => {
+            return state.paymentTypes
+        },
+        getPaymentsPerPage: state => {
+            return state.paymentsPerPage
         }
-
     },
     actions: {
         fetchData({ commit }) {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    const items = []
-                    for (let i = 1; i < 105; i++) {
-                        items.push({
-                            date: "13.05.2021",
-                            category: "Education",
-                            price: i
-                        })
-                    }
-                    resolve(items)
-                }, 2000)
-
+                    resolve([
+                        { date: '2021-05-07', category: 'food', value: 99 },
+                        { date: '2021-05-07', category: 'finance', value: 99 },
+                        { date: '2021-05-07', category: 'food', value: 999 },
+                        { date: '2021-05-07', category: 'others', value: 99 },
+                        { date: '2021-05-07', category: 'food', value: 999 },
+                        { date: '2022-05-07', category: 'food', value: 99 },
+                        { date: '2022-05-07', category: 'finance', value: 99 },
+                        { date: '2022-05-07', category: 'food', value: 999 },
+                        { date: '2022-05-07', category: 'others', value: 99 },
+                        { date: '2022-05-07', category: 'food', value: 999 },
+                        { date: '2023-05-07', category: 'food', value: 99 },
+                        { date: '2023-05-07', category: 'finance', value: 99 },
+                        { date: '2023-05-07', category: 'food', value: 999 },
+                        { date: '2023-05-07', category: 'others', value: 99 },
+                        { date: '2022-05-07', category: 'food', value: 999 },
+                        { date: '2023-05-07', category: 'food', value: 99 },
+                        { date: '2023-05-07', category: 'finance', value: 99 },
+                        { date: '2023-05-07', category: 'food', value: 999 },
+                        { date: '2023-05-07', category: 'others', value: 99 }
+                    ])
+                }, 1000)
             })
                 .then(res => {
-                    commit('setPaymentsListData', res)
-
+                    commit('setPaymentsList', res)
                 })
         }
     }
