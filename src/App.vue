@@ -1,32 +1,24 @@
 <template>
   <div id="app">
-    <header :class="[$style.header]">
-      My personal costs
-      <a href="#dashboard">Dashboard</a>
-      <a href="#about">About</a>
-      <a href="#404">404</a>
-    </header>
+    <header class="header">My personal costs</header>
     <main>
-      <PageDashboard v-if="page === 'dashboard'" />
-      <PageAbout v-if="page === 'about'" />
-      <Page404 v-if="page === '404'" />
-      <PaymentForm @add="onDataAdded" />
-      <PaymentsList :items="paymentsList" />
+      <PaymentForm />
+      <PaymentsList />
     </main>
   </div>
 </template>
 
 <script>
-import PageDashboard from "./page/PageDashboard";
-import PageAbout from "./page/PageAbout";
-import Page404 from "./page/page404 ";
+import PaymentList from "./components/PaymentsList.vue";
+import PaymentForm from "./components/PaymentForm.vue";
+
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
   components: {
-    PageDashboard,
-    PageAbout,
-    Page404,
+    PaymentList,
+    PaymentForm,
   },
 
   data() {
